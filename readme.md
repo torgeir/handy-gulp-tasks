@@ -6,8 +6,8 @@
 - Recompile on file change (watch)
 - Minify js, css and html
 - Revision files (js and ss) with version numbers in the file name, based on a hash of the files contents
-- Lint of js (jshint)
-- Optimize of images (gif, jpeg, png, svg)
+- Lint js (jshint)
+- Optimize images (gif, jpeg, png, svg)
 - Automatically add css vendor-prefixes
 - Js tests on node with mocha
 - Some handy less mixins, font awesome
