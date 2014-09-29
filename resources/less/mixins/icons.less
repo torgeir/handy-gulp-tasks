@@ -1,0 +1,51 @@
+@path-images: "/images";
+
+.icon() {
+  display: inline-block;
+  margin: 0 @margin-icons;
+  background-repeat: no-repeat;
+}
+
+.icon-retina(@image, @icon-size) {
+  .icon();
+
+  @icon-url: "@{path-images}/@{image}.png";
+  @icon-url-2x: "@{path-images}/@{image}@2x.png";
+
+  background: url(@icon-url) top left no-repeat transparent;
+
+  height: @icon-size;
+  width: @icon-size;
+  background-size: @icon-size @icon-size;
+
+  /* http://css-tricks.com/snippets/css/retina-display-media-query/ */
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and ( min--moz-device-pixel-ratio: 2),
+  only screen and ( -o-min-device-pixel-ratio: 2/1),
+  only screen and ( min-device-pixel-ratio: 2),
+  only screen and ( min-resolution: 192dpi),
+  only screen and ( min-resolution: 2dppx) {
+      background-image: url(@icon-url-2x);
+  }
+}
+
+.clickable-icon() {
+  .icon();
+  .clickable();
+
+  position: relative;
+
+  &:active {
+    top: 1px;
+    right: 1px;
+  }
+}
+
+.icon-font-awesome(@font-awesome-char) {
+    &:before {
+        font-family: FontAwesome;
+        content: @font-awesome-char;
+        margin: 0 @margin-icons;
+    }
+}

@@ -1,0 +1,55 @@
+@font-size-browser-default: 16; /* http://alistapart.com/article/howtosizetextincss */
+
+@font-size-base: 18;
+@line-height-base: 24;
+@line-height-heading-base: 18;
+
+@font-size: (1em * @font-size-base / @font-size-browser-default);
+@line-height: (@line-height-base / @font-size-browser-default);
+
+@font-size-h1: (1em * 28 / @font-size-browser-default);
+@font-size-h2: (1em * 22 / @font-size-browser-default);
+@font-size-h3: (1em * 18 / @font-size-browser-default);
+@line-height-heading: (@line-height-heading-base / @font-size-browser-default);
+
+@font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+
+h1, h2, h3 {
+  color: @color-font;
+  font-family: @font-family;
+  font-weight: 100;
+}
+
+h2, h3 {
+  margin-bottom: 0em;
+  line-height: @line-height-heading;
+}
+
+h1 {
+  font-size: @font-size-h1;
+}
+
+h2 {
+  font-size: @font-size-h2;
+}
+
+h3 {
+  font-size: @font-size-h3;
+}
+
+h1 i,
+h2 i,
+h3 i {
+  margin-right: 0.3em;
+}
+
+i[class^="icon-"] {
+  margin: 0 @margin-icons;
+  display: inline-block;
+  line-height: @line-height;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
