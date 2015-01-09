@@ -57,7 +57,6 @@ c.notifyError = function notifyError (description) {
       title: description + " error",
       message: "<%= error.message %>"
     }).apply(this, args);
-    this.emit('end'); // Keep gulp from hanging on this task
   };
 };
 
