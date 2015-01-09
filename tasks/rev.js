@@ -11,13 +11,16 @@ module.exports = function (minify) {
 
     var gulp = require('gulp'),
         path = require('path'),
+        fs   = require('fs'),
         rev  = require('gulp-rev');
 
     var c = require('./config');
 
-    var files = c.FILES_REV.map(function (conf) {
-      return c.target(conf.entryPath);
-    });
+    var targetFolderJs = c.TARGET_FOLDER + '/' + c.TARGET_FOLDER_JS;
+    var files = [ c.TARGET_FOLDER + '/' + c.TARGET_FOLDER_CSS + '/' + c.TARGET_FILE_CSS ]
+      .concat(fs.readdirSync(targetFolderJs).map(function (f) {
+        return targetFolderJs + '/' + f;
+      }));
 
     return gulp.src(files, { base: path.join(process.cwd(), c.TARGET_FOLDER) })
       .pipe(rev())

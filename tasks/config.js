@@ -1,4 +1,5 @@
 var notify = require('gulp-notify'),
+    fs     = require('fs');
     path   = require('path');
 
 var c = exports;
@@ -6,6 +7,8 @@ c.all = allFiles;
 c.target = targetFolder;
 
 c.TARGET_FOLDER = "./dist";
+
+c.SRC_FOLDER = "./resources";
 
 // fonts
 c.FOLDER_FONTS        = './node_modules/font-awesome/fonts/*';
@@ -19,14 +22,11 @@ c.TARGET_FOLDER_IMAGES = 'images';
 c.FOLDER_LESS       = './resources/less';
 c.PATH_LESS_ENTRY   = './resources/less/app.less';
 c.TARGET_FILE_CSS   = 'app.css';
-c.TARGET_PATH_CSS   = 'css/app.css';
 c.TARGET_FOLDER_CSS = 'css';
 
 // js
 c.FOLDER_JS        = './resources/js';
-c.PATH_JS_ENTRY    = './resources/js/app.js';
-c.TARGET_FILE_JS   = 'app.js';
-c.TARGET_PATH_JS   = 'js/app.js';
+c.PATH_JS_ENTRIES  = fs.readdirSync(c.FOLDER_JS).map(function (f) { return c.FOLDER_JS + '/' + f; }).filter(function (f) { return f.indexOf('.js') !== -1; });
 c.TARGET_FOLDER_JS = 'js';
 
 // index file
@@ -34,12 +34,6 @@ c.PATH_INDEX = "./resources/html/index.html";
 
 // tests
 c.FOLDER_TESTS = './resources/js/tests';
-
-// rev
-c.FILES_REV = [
-  { name: "appCss", entryPath: c.TARGET_PATH_CSS, targetFile: c.TARGET_FILE_CSS },
-  { name: "appJs",  entryPath: c.TARGET_PATH_JS,  targetFile: c.TARGET_FILE_JS  },
-];
 
 c.TARGET_FOLDER_ALL = [
     c.TARGET_FOLDER_CSS,

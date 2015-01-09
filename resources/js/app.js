@@ -1,7 +1,7 @@
 var $ = require('zepto-browserify').$;
 
-var lib   = require('./lib'),
-    async = require('./async');
+var lib   = require('./lib/lib'),
+    async = require('./lib/async');
 
 async(function * () {
   var $app = $('.app');

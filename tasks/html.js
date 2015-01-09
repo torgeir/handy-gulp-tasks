@@ -4,9 +4,10 @@ module.exports = function (minify) {
 
     var embedlr    = require('gulp-embedlr'),
         del        = require('del'),
+        fs         = require('fs'),
         gulp       = require('gulp'),
         gulpif     = require('gulp-if'),
-        handlebars = require('gulp-compile-handlebars'),
+        replace    = require('gulp-replace'),
         minhtml    = require('gulp-htmlmin'),
         path       = require('path');
 
@@ -24,14 +25,14 @@ module.exports = function (minify) {
       }
     }
 
-    var templateData = c.FILES_REV.reduce(function (acc, conf) {
-      acc[conf.name] = minify ? manifest[conf.targetFile] : conf.entryPath;
-      return acc;
-    }, {});
-
     return gulp.src(c.PATH_INDEX)
       .pipe(gulpif(!minify, embedlr()))
-      .pipe(handlebars(templateData))
+      .pipe(gulpif(minify, replace(/(js|css)\/([^.]+\.(?:js|css))/g, function (ignore, path, filename) {
+        if (minify) {
+          return manifest[filename];
+        }
+        return path + '/' + filename;
+      })))
       .pipe(gulpif(minify, minhtml({
         // https://github.com/jonschlinkert/gulp-htmlmin
         collapseWhitespace: true,

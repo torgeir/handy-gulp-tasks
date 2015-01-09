@@ -5,6 +5,7 @@ module.exports = function (minify) {
     var buffer     = require('vinyl-buffer'),
         browserify = require('browserify'),
         es6ify     = require('es6ify'),
+        mkdirp     = require('mkdirp'),
         gulp       = require('gulp'),
         gulpif     = require('gulp-if'),
         source     = require('vinyl-source-stream'),
@@ -32,9 +33,17 @@ module.exports = function (minify) {
       bundler = watchify(bundler);
     }
 
+    var targetFolder = c.TARGET_FOLDER + '/' + c.TARGET_FOLDER_JS;
+    mkdirp.sync(targetFolder); // until http://github.com/substack/factor-bundle/issues/49
+
     bundler
-      // https://github.com/sebastiandeutsch/es6ify-test/blob/master/browserify.js
-      .add(c.PATH_JS_ENTRY)
+      .add(c.PATH_JS_ENTRIES)
+      .plugin('factor-bundle', {
+        entries: c.PATH_JS_ENTRIES,
+        outputs: c.PATH_JS_ENTRIES.map(function (bundle) {
+          return bundle.replace(c.FOLDER_JS, targetFolder);
+        })
+      })
       .transform(es6ify.configure(/^(?!.*node_modules)+.+\.js$/))
       .on('update', rebundle);
 
@@ -43,7 +52,7 @@ module.exports = function (minify) {
     function rebundle () {
       var stream = bundler.bundle();
       return gulpif(minify, stream, stream.on('error', c.notifyError('Browserify')))
-        .pipe(source(c.TARGET_FILE_JS))
+        .pipe(source('common.js'))
         .pipe(buffer())
         .pipe(gulpif(minify, uglify()))
         .pipe(gulp.dest(c.target(c.TARGET_FOLDER_JS)))
