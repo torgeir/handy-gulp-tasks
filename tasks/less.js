@@ -1,6 +1,6 @@
 module.exports = function (minify) {
 
-  return function less () {
+  return function styles () {
 
     var autoprefix = require('gulp-autoprefixer'),
         gulp       = require('gulp'),
